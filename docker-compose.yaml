@@ -23,7 +23,7 @@ services:
       - mariadb:mariadb      
 
   mariadb:
-    image: mariadb
+    image: mariadb:10.2
     restart: unless-stopped
     volumes:
       - ./db_orange:/var/lib/mysql
