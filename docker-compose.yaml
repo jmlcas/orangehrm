@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+
+  mariadb:
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - ./db_orange:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=orangehrm
+      - MYSQL_ROOT_USER=root
+      - MYSQL_DATABASE=orangehrm
+      
+  orangehrm:
+    image: orangehrm/orangehrm:latest
+    restart: unless-stopped
+    ports:
+      - 8200:80
+      - 8443:443
+    environment:
+      - ORANGEHRM_DATABASE_HOST=mariadb
+      - ORANGEHRM_DATABASE_USER=root
+      - ORANGEHRM_DATABASE_PASSWORD=orangehrm
+      - ORANGEHRM_DATABASE_NAME=orangehrm
+      - PUID=998
+      - PGID=100
+    volumes:
+      - ./orange:/orangehrm
+    depends_on:
+      - mariadb
+    links:
+      - mariadb:mariadb
