@@ -1,5 +1,3 @@
-version: "3.3"
-
 services:
       
   orangehrm:
@@ -13,17 +11,17 @@ services:
       - ORANGEHRM_DATABASE_USER=root
       - ORANGEHRM_DATABASE_PASSWORD=orangehrm
       - ORANGEHRM_DATABASE_NAME=orangehrm
-      - PUID=998
-      - PGID=100
+      - PUID=1000
+      - PGID=1000
     volumes:
       - ./orange:/orangehrm
     depends_on:
       - mariadb
     links:
-      - mariadb:mariadb      
+      - mariadb:mariadb
 
   mariadb:
-    image: mariadb:10.2
+    image: mariadb:11.0
     restart: unless-stopped
     volumes:
       - ./db_orange:/var/lib/mysql
@@ -31,4 +29,4 @@ services:
       - MYSQL_ROOT_PASSWORD=orangehrm
       - MYSQL_ROOT_USER=root
       - MYSQL_DATABASE=orangehrm      
-      
+
